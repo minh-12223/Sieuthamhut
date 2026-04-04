@@ -6,7 +6,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 export async function analyzeSensorData(data: SensorData[]): Promise<HealthInsight> {
   const latest = data[data.length - 1];
   const history = data.slice(-5).map(d => 
-    `Time: ${d.timestamp}, Moisture: ${d.moisture}%, pH: ${d.ph}, Temp: ${d.temperature}°C, Ammonia: ${d.ammonia}ppm`
+    `Time: ${d.timestamp}, Moisture: ${d.moisture}%, pH: ${d.ph}, Temp: ${d.temperature}°C, Pressure: ${d.pressure}mmHg`
   ).join("\n");
 
   const prompt = `
@@ -15,7 +15,7 @@ export async function analyzeSensorData(data: SensorData[]): Promise<HealthInsig
     - Độ ẩm: ${latest.moisture}%
     - pH: ${latest.ph}
     - Nhiệt độ: ${latest.temperature}°C
-    - Nồng độ Amoniac: ${latest.ammonia}ppm
+    - Áp lực: ${latest.pressure}mmHg
 
     Lịch sử gần đây:
     ${history}

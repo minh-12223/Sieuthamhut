@@ -8,7 +8,7 @@ import {
   Activity, 
   Droplets, 
   Thermometer, 
-  Wind, 
+  Gauge, 
   AlertCircle, 
   CheckCircle2, 
   AlertTriangle,
@@ -43,7 +43,7 @@ const generateMockData = (prev?: SensorData): SensorData => {
       moisture: 15,
       ph: 6.5,
       temperature: 36.5,
-      ammonia: 2
+      pressure: 80
     };
   }
 
@@ -53,7 +53,7 @@ const generateMockData = (prev?: SensorData): SensorData => {
     moisture: Math.min(100, Math.max(0, prev.moisture + (Math.random() * 4 - 1.5))),
     ph: Math.min(14, Math.max(0, prev.ph + (Math.random() * 0.2 - 0.1))),
     temperature: Math.min(42, Math.max(34, prev.temperature + (Math.random() * 0.4 - 0.2))),
-    ammonia: Math.min(100, Math.max(0, prev.ammonia + (Math.random() * 2 - 0.5)))
+    pressure: Math.min(200, Math.max(0, prev.pressure + (Math.random() * 5 - 2)))
   };
 };
 
@@ -170,11 +170,11 @@ export default function App() {
             trend={dataHistory.length > 1 ? latest.temperature - dataHistory[dataHistory.length-2].temperature : 0}
           />
           <SensorCard 
-            title="Amoniac" 
-            value={`${latest.ammonia.toFixed(1)} ppm`} 
-            icon={<Wind className="text-emerald-500" />} 
+            title="Áp lực" 
+            value={`${latest.pressure.toFixed(1)} mmHg`} 
+            icon={<Gauge className="text-emerald-500" />} 
             color="emerald"
-            trend={dataHistory.length > 1 ? latest.ammonia - dataHistory[dataHistory.length-2].ammonia : 0}
+            trend={dataHistory.length > 1 ? latest.pressure - dataHistory[dataHistory.length-2].pressure : 0}
           />
 
           {/* Charts */}
@@ -211,7 +211,7 @@ export default function App() {
                   />
                   <Area 
                     type="monotone" 
-                    dataKey="ammonia" 
+                    dataKey="pressure" 
                     stroke="#10b981" 
                     strokeWidth={3}
                     fillOpacity={0}

@@ -3,7 +3,7 @@ export interface SensorData {
   moisture: number; // 0-100%
   ph: number; // 0-14
   temperature: number; // Celsius
-  ammonia: number; // ppm
+  pressure: number; // mmHg or kPa
 }
 
 export interface HealthInsight {
