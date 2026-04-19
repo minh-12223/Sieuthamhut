@@ -6,6 +6,49 @@
     <title>My Google AI Studio App</title>
   </head>
   <body>
+    <div style="text-align: center; margin: 20px; font-family: Arial, sans-serif; border: 2px solid #007bff; padding: 20px; border-radius: 10px; background-color: #f0f8ff;">
+    <h2 style="color: #007bff;">Dữ liệu từ ESP32</h2>
+    <div id="data-display" style="font-size: 48px; font-weight: bold; color: #333;">Đang đợi kết nối...</div>
+    <p id="status" style="color: #888;">Trạng thái: Đang cập nhật...</p>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+  // Cấu hình của bạn
+  const firebaseConfig = {
+    apiKey: "AIzaSyD4bSpD6ibbn_XON9BHjxEZg1znDY6dnI4",
+    authDomain: "sieuthamhut-f3189.firebaseapp.com",
+    databaseURL: "https://sieuthamhut-f3189-default-rtdb.firebaseio.com",
+    projectId: "sieuthamhut-f3189",
+    storageBucket: "sieuthamhut-f3189.firebasestorage.app",
+    messagingSenderId: "436800759160",
+    appId: "1:436800759160:web:97062df39bc3030d44148d",
+    measurementId: "G-HECV82B4X0"
+  };
+
+  // Khởi tạo Firebase
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  // Lắng nghe nhánh "test_number" 
+  const sensorRef = database.ref('test_number');
+
+  sensorRef.on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data !== null) {
+        document.getElementById('data-display').innerText = data;
+        document.getElementById('status').innerText = "Cập nhật lúc: " + new Date().toLocaleTimeString();
+        console.log("Dữ liệu mới:", data);
+    } else {
+        document.getElementById('data-display').innerText = "Chưa có dữ liệu";
+    }
+  }, (error) => {
+      console.error("Lỗi đọc dữ liệu:", error);
+      document.getElementById('status').innerText = "Lỗi kết nối!";
+  });
+</script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
