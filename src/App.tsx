@@ -41,7 +41,7 @@ export default function App() {
   const [insight, setInsight] = useState<HealthInsight | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  // CHỈ THAY ĐỔI: Lấy 4 chỉ số từ Firebase
+  // LẤY 4 CHỈ SỐ THỰC TỪ FIREBASE
   useEffect(() => {
     const rootRef = ref(db, '/'); 
     const unsubscribe = onValue(rootRef, (snapshot) => {
@@ -72,7 +72,7 @@ export default function App() {
       const result = await analyzeSensorData(sensorData);
       setInsight(result);
     } catch (error) {
-      console.error("AI Analysis failed:", error);
+      console.error("Lỗi phân tích AI:", error);
     } finally {
       setIsAnalyzing(false);
     }
@@ -94,16 +94,17 @@ export default function App() {
 
       <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
+          {/* 4 THẺ CẢM BIẾN GIỮ NGUYÊN GIAO DIỆN GỐC */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <SensorCard title="Độ ẩm vật liệu" value={`${sensorData.moisture}%`} icon={<Droplets />} color="blue" trend={0} />
-            <SensorCard title="Nhiệt độ" value={`${sensorData.temperature.toFixed(1)}°C`} icon={<Thermometer />} color="orange" trend={0} />
-            <SensorCard title="Chỉ số pH" value={sensorData.ph.toFixed(1)} icon={<Activity />} color="purple" trend={0} />
-            <SensorCard title="Áp suất tiếp xúc" value={`${sensorData.pressure} mmHg`} icon={<Gauge />} color="emerald" trend={0} />
+            <SensorCard title="Độ ẩm vật liệu" value={`${sensorData.moisture}%`} icon={<Droplets />} color="blue" />
+            <SensorCard title="Nhiệt độ" value={`${sensorData.temperature.toFixed(1)}°C`} icon={<Thermometer />} color="orange" />
+            <SensorCard title="Chỉ số pH" value={sensorData.ph.toFixed(1)} icon={<Activity />} color="purple" />
+            <SensorCard title="Áp suất tiếp xúc" value={`${sensorData.pressure} mmHg`} icon={<Gauge />} color="emerald" />
           </div>
 
           <section className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
             <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
-              <History className="w-5 h-5 text-blue-500" /> Xu hướng độ ẩm
+              <History className="w-5 h-5 text-blue-500" /> Xu hướng độ ẩm thực tế
             </h3>
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -129,7 +130,7 @@ export default function App() {
           <section className="bg-slate-900 text-white p-6 rounded-3xl shadow-xl border border-slate-800">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold flex items-center gap-2">
-                <BrainCircuit className="w-5 h-5 text-blue-400" /> AI Insights
+                <BrainCircuit className="w-5 h-5 text-blue-400" /> Phân tích từ AI
               </h3>
               <button onClick={runAnalysis} className="p-2 hover:bg-slate-800 rounded-xl transition-colors">
                 <RefreshCw className={cn("w-5 h-5", isAnalyzing && "animate-spin")} />
@@ -148,7 +149,7 @@ export default function App() {
                   </div>
                 </motion.div>
               ) : (
-                <p className="text-center text-slate-500 py-10 text-sm">Nhấn để AI phân tích dữ liệu thực tế.</p>
+                <p className="text-center text-slate-500 py-10 text-sm">Nhấn nút để AI phân tích dữ liệu thực tế.</p>
               )}
             </AnimatePresence>
           </section>
@@ -156,13 +157,13 @@ export default function App() {
       </main>
 
       <footer className="max-w-7xl mx-auto mt-12 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm">
-        <p>© 2026 Visionary Health Monitor - Giải pháp Y tế Thông minh</p>
+        <p>© 2026 Siêu Thấm Hút AI - Giải pháp Y tế Thông minh</p>
       </footer>
     </div>
   );
 }
 
-function SensorCard({ title, value, icon, color, trend }: { title: string, value: string, icon: React.ReactNode, color: string, trend: number }) {
+function SensorCard({ title, value, icon, color }: { title: string, value: string, icon: React.ReactNode, color: string }) {
   const colors: Record<string, string> = {
     blue: "bg-blue-50 text-blue-600",
     purple: "bg-purple-50 text-purple-600",
